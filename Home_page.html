@@ -356,7 +356,7 @@ button:hover {
     <a href="#training">Training</a>
     <a href="#support">Support</a>
     <a href="#Ticket Status">Ticket Status</a>
-    <a href="http://127.0.0.1:5500/login_page.html"target="_blank" onclick="logout()">Logout</a>
+    <a href="https://umar-imam.github.io/Bits_project/login_page.html"target="_blank" onclick="logout()">Logout</a>
   </nav>
   <div class="profile-circle" title="My Profile">
     <span>UI</span>
@@ -373,7 +373,7 @@ button:hover {
 
   <hr style="margin: 10px 0; border-color: rgba(255,255,255,0.1);" />
   <a href="#">View Account</a><br>
-  <a href="http://127.0.0.1:5500/reset-password.html" target="_blank">Reset Password</a><br>
+  <a href="https://umar-imam.github.io/Bits_project/reset-password.html" target="_blank">Reset Password</a><br>
   <a href="#">My Dashboard</a>
 </div>
 </div>
@@ -506,7 +506,7 @@ chatFrame.style.display = 'none';
 
     auth.signInWithEmailAndPassword(email, password)
       .then(() => {
-        window.location.href = "http://127.0.0.1:5500/Home_page.html";
+        window.location.href = "https://umar-imam.github.io/Bits_project/Home_page.html";
       })
       .catch((error) => {
         alert("Login failed: " + error.message);
@@ -520,7 +520,7 @@ chatFrame.style.display = 'none';
       document.getElementById("userName").textContent = user.email.charAt(0).toUpperCase();
     } else {
       // If not logged in, redirect to login page
-      window.location.href = "http://127.0.0.1:5500/login_page.html";
+      window.location.href = "https://umar-imam.github.io/Bits_project/login_page.html";
     }
   });
   const app = initializeApp(firebaseConfig);
