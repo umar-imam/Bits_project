@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee Portal | FutureWave Solutions</title>
+
+  <!-- Firebase -->
+  <!-- Firebase App (core SDK) -->
+
+
+  <style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #2a2f4f, #3c5186);
+  color: #fff;
+  min-height: 100vh;
+  padding: 20px;
+  background-attachment: fixed;
+}
+ 
+.container {
+  max-width: 1300px;
+  margin: auto;
+}
+ 
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px 25px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+ 
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffdd57;
+}
+ 
+nav a {
+  margin: 0 15px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+ 
+nav a:hover {
+  color: #ffdd57;
+  transform: scale(1.05);
+}
+ 
+.main {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+ 
+.sidebar {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+ 
+.sidebar img {
+  width: 100%;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+ 
+.login-box {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 15px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+ 
+.login-box h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #ffdd57;
+}
+ 
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+}
+ 
+input:focus {
+  outline: none;
+  box-shadow: 0 0 5px #ffdd57;
+}
+
+nav a:hover {
+  color: #ffdd57;
+  transform: scale(1.2);
+  font-weight: 600;
+}
+
+ 
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background-color: #ffdd57;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+ 
+button:hover {
+  background-color: #ffe580;
+  transform: scale(1.02);
+}
+ 
+.footer-note {
+  margin-top: 15px;
+  font-size: 13px;
+  color: #ddd;
+  text-align: center;
+}
+ 
+.content {
+  flex: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+ 
+.section {
+  flex: 1 1 280px;
+  padding: 20px; 
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+ 
+.section:hover {
+  transform: scale(1.01);
+}
+ 
+.section h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  color: #ffdd57;
+}
+ 
+.section ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+ 
+.section ul li {
+  margin-bottom: 10px;
+}
+ 
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .main {
+    flex-direction: column;
+  }
+}
+ 
+/* Chatbot Floating Button */
+#chat-icon {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 60px;
+  height: 60px;
+  color: white;
+  font-size: 24px;
+  background-color: #0078d4;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+ 
+#chat-icon:hover::after {
+  content: "How can I assist you?";
+  position: absolute;
+  left: 70px;
+  background: #fff;
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  white-space: nowrap;
+  font-size: 14px;
+}
+ 
+#chat-icon img {
+  width: 30px;
+  height: 30px;
+}
+ 
+#chat-frame {
+  position: fixed;
+  bottom: 90px;
+  left: 20px;
+  width: 350px;
+  height: 500px;
+  border: none;
+  display: none;
+  z-index: 999;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  opacity: 0;
+  transform: translateY(20px);
+}
+ 
+#chat-frame.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.profile-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #7579cc;
+  color: #b3e00d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin-left: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  box-shadow: 0 0 8px rgba(0,0,0,0.2);
+}
+
+.profile-circle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
+}
+
+ 
+#chat-popup {
+  position: fixed;
+  bottom: 100px;
+  left: 20px;
+  width: 300px;
+  height: 400px;
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  z-index: 1000;
+  display: none;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.4s ease;
+}
+ 
+#chat-popup.show {
+  display: block;
+  opacity: 1;
+  transform: translateX(0);
+}
+ 
+#chat-icon:hover {
+  transform: scale(1.1);
+  background-color: #0056b3;
+}
+.profile-dropdown {
+  display: none;
+  position:absolute;
+  top: 60px;
+  right: 20px;
+  background-color: #1e1e3f;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 15px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+  z-index: 99999;
+  text-align: left;
+  font-family: 'Segoe UI', sans-serif;
+  pointer-events: auto;
+  transform: translateZ(0);
+}
+.profile-dropdown.show {
+  display: block;
+}
+
+.profile-dropdown a {
+   color: #90cdf4;
+  text-decoration: none;
+  display: block;
+  
+}
+
+.profile-dropdown a:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+
+</style>
+ 
+</head>
+<body>
+
+   <div class="chat-icon"
+  onclick="toggleChatbot()">
+</div>
+  <div class="container">
+    <header>
+      <div>
+        <div class="logo">FutureWave Solutions</div>
+        <div id="welcomeMessage"></div>
+        
+      </div>
+    <div style="display: flex; align-items: center; gap: 10px;">
+  <nav>
+    <a href="#about">About</a>
+    <a href="#policies">Policies</a>
+    <a href="#benefits">Benefits</a>
+    <a href="#training">Training</a>
+    <a href="#support">Support</a>
+    <a href="#Ticket Status">Ticket Status</a>
+    <a href="http://127.0.0.1:5500/login_page.html"target="_blank" onclick="logout()">Logout</a>
+  </nav>
+  <div class="profile-circle" title="My Profile">
+    <span>UI</span>
+  </div>
+  
+</div>
+
+
+  <div class="profile-dropdown" id="profileDropdown">
+   
+    
+  <p><strong id="userName">Loading...</strong></p>
+<p id="userEmail">...</p>
+
+  <hr style="margin: 10px 0; border-color: rgba(255,255,255,0.1);" />
+  <a href="#">View Account</a><br>
+  <a href="http://127.0.0.1:5500/reset-password.html" target="_blank">Reset Password</a><br>
+  <a href="#">My Dashboard</a>
+</div>
+</div>
+
+    </header>
+
+    <div class="main">
+      <div class="sidebar">
+        <img src="image.jpg.jpg" alt="Image">
+      </div>
+      <div class="content">
+        <div class="section" id="about">
+          <h2>About Us</h2>
+          <p>FutureWave Solutions is a leading global IT firm building digital products and enterprise solutions that transform industries.</p>
+        </div>
+        <div class="section" id="policies">
+          <h2>Company Policies</h2>
+          <ul>
+            <li>Equal Opportunity Employment</li>
+            <li>Work from Anywhere Policy</li>
+            <li>Annual Ethics & Compliance Certification</li>
+            <li>Mandatory Cybersecurity Training</li>
+          </ul>
+        </div>
+        <div class="section" id="benefits">
+          <h2>Employee Benefits</h2>
+          <ul>
+            <li>Health & Wellness Programs</li>
+            <li>Flexible Work Hours</li>
+            <li>Career Development Support</li>
+            <li>Paid Certifications & Learning Portals</li>
+          </ul>
+        </div>
+        <div class="section" id="training">
+          <h2>Onboarding & Training</h2>
+          <ul>
+            <li>New Hire Orientation</li>
+            <li>Role-Based Skill Training</li>
+            <li>Access to Learning Portal (LMS)</li>
+            <li>1:1 Mentorship Program</li>
+          </ul>
+        </div>
+        <div class="section" id="support">
+          <h2>Support</h2>
+          <p>Need help with login, setup, or processes? Reach out to our 24x7 HR or IT Helpdesk via portal or email support@futurewave.com</p>
+        </div>
+      </div>
+    </div>
+
+     <!--chatbot icon-->
+ 
+<div id="chat-icon">
+  <img src="bot_image.jpg" alt="chat">
+</div>
+ 
+<!--Chatbot iframe-->
+ <iframe
+ id="chat-frame"
+ src="chat-frame"
+    allow="microphone;"
+  ></iframe>
+  </div>
+
+  <script>
+  const chatIcon  = document.getElementById('chat-icon');
+  const chatFrame = document.getElementById('chat-frame');
+const baseSrc = "https://copilotstudio.microsoft.com/environments/Default-e24ac094-efd8-4a6b-98d5-a129b32a8c9a/bots/cr3ea_onboardingAssistant/webchat?__version__=2";
+ 
+
+
+function openChat() {
+    // Add a unique timestamp to force a fresh session
+    const freshSrc = baseSrc + "&t=" + new Date().getTime();
+    chatFrame.src = freshSrc;
+chatFrame.style.display = 'block';
+    requestAnimationFrame(() => {
+      chatFrame.classList.add('show');
+    });
+  }
+ 
+  function closeChat() {
+    chatFrame.classList.remove('show');
+    chatFrame.addEventListener('transitionend', function handler() {
+chatFrame.style.display = 'none';
+      chatFrame.removeEventListener('transitionend', handler);
+    });
+  }
+ chatIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (chatFrame.classList.contains('show')) {
+      closeChat();
+    } else {
+      openChat();
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!chatFrame.contains(e.target) && !chatIcon.contains(e.target)) {
+      closeChat();
+    }
+  });
+  
+</script>
+ 
+ <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+
+  // Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyDdePiBJiznyDb7IqhvGrk1XqTbVyOMsbw",
+    authDomain: "bits-login.firebaseapp.com",
+    storageBucket: "bits-login.firebasestorage.app",
+    messagingSenderId: "808799174304",
+    measurementId: "G-VHJB4BQPG4",
+    projectId: "bits-login",
+    appId: "1:808799174304:web:8006ad7b8886420a4d93c5"
+  };
+
+  // Initialize Firebase
+  
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // Handle login
+  window.loginUser = function (event) {
+    event.preventDefault();
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    auth.signInWithEmailAndPassword(email, password)
+      .then(() => {
+        window.location.href = "http://127.0.0.1:5500/Home_page.html";
+      })
+      .catch((error) => {
+        alert("Login failed: " + error.message);
+      });
+  };
+
+  // Handle showing user on homepage
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      document.getElementById("userEmail").textContent = user.email;
+      document.getElementById("userName").textContent = user.email.charAt(0).toUpperCase();
+    } else {
+      // If not logged in, redirect to login page
+      window.location.href = "http://127.0.0.1:5500/login_page.html";
+    }
+  });
+  const app = initializeApp(firebaseConfig);
+</script>
+<script>
+  const profileBtn = document.querySelector(".profile-circle");
+  const dropdown = document.getElementById("profileDropdown");
+
+  profileBtn.addEventListener("click", () => {
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!profileBtn.contains(event.target) && !dropdown.contains(event.target)) {
+      dropdown.style.display = "none";
+    }
+  });
+</script>
+<script>
+    function toggleDropdown() {
+      document.getElementById("profile-dropdown").classList.toggle("show");
+    }
+
+    // Close dropdown if user clicks outside
+    window.onclick = function (event) {
+      if (!event.target.matches('.profile-circle')) {
+        var dropdown = document.getElementById("profile-dropdown");
+        if (dropdown && dropdown.classList.contains('show')) {
+          dropdown.classList.remove('show');
+        }
+      }
+    };
+  </script>
+<!-- Firebase App (Core) SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+
+<!-- Firebase Authentication SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+
+  
+</body>
+</html>
